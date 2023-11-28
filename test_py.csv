@@ -1,0 +1,3 @@
+Name,type,size,tags
+test_linux,t2.micro,10,"{test-app-linux, root_vol}"
+test_2,c5.xlarge,100,dev-app-linux

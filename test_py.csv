@@ -1,3 +1,13 @@
-Name,type,size,tags
-test_linux,t2.micro,10,"{test-app-linux, root_vol}"
-test_2,c5.xlarge,100,dev-app-linux
+Name,Instance_Type,Root_Volume,Data_Volume,Environment_Tag,Server_Type_Tag,OS_Type_Tag,Availability-Zone
+dev-app-linux1,t2.micro,10,,Development,Application,Linux,us-west-1a
+dev-app-linux2,t2.micro,10,,Development,Application,Linux,us-west-1b
+test-app-linux1,t2.micro,10,,Test,Application,Linux,us-west-1a
+test-app-linux2,t2.micro,10,,Test,Application,Linux,us-west-1b
+pre-prod-app-linux1,t2.micro,20,,PreProd,Application,Linux,us-west-1a
+pre-prod-app-linux2,t2.micro,20,,PreProd,Application,Linux,us-west-1b
+dev-db-linux1,t2.micro,10,,Development,Database,Linux,us-west-1a
+dev-db-linux2,t2.micro,10,,Development,Database,Linux,us-west-1b
+test-db-linux1,t2.micro,10,,Test,Database,Linux,us-west-1a
+test-db-linux2,t2.micro,10,,Test,Database,Linux,us-west-1b
+pre-prod-db-linux1,t2.micro,20,,PreProd,Database,Linux,us-west-1a
+pre-prod-db-linux2,t2.micro,20,,PreProd,Database,Linux,us-west-1b

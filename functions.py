@@ -8,7 +8,6 @@ def read_csv(csv_path):
         next(csv_file) # header lines
         values_list = csv.reader(csv_file)
         for value in values_list:
-            
             ec2 = {
                 value[0] : {
                     "Instance Type" : value[1],
@@ -27,7 +26,7 @@ def tf_resource(ec2_vals):
     for ec2_instance in ec2_vals:
         server_name = ec2_instance
         instance_type = ec2_vals[ec2_instance]["Instance Type"]
-        resource = ec2_vals[ec2_instance]["Root Volume"]
+        root = ec2_vals[ec2_instance]["Root Volume"]
         env = ec2_vals[ec2_instance]["Environment"]
         availability_zone = ec2_vals[ec2_instance]["Availability-Zone"]
         server_type = ec2_vals[ec2_instance]["Server Type"]
@@ -35,15 +34,14 @@ def tf_resource(ec2_vals):
         key = get_key(ec2_vals[ec2_instance]["OS"])
         subnet_id = get_subnet(env, availability_zone, server_type)
         
-        tf_resource =f'resource "aws_instance" "{server_name}" ' + '{' + \
-                f'\n\tami = {ami}\n\tinstance_type = "{instance_type}"' + \
-                f'\n\tsubnet_id = {subnet_id}\n\tkey_name = {key}\n\troot' + \
-                f'_block_device '+ '{\n\t\tdelete_on_termination = true' + \
-                '\n\t\tencrypted = true\n\t\tvolume_size = 10\n\n\t\ttags =' + \
-                ' {' + f'\n\t\t\tName = "{server_name}"\n\t\t\tEnvironment ' + \
-                f' = "{env}"' + '\n\t\t}\n\t}\n\n\ttags = {\n\t\tN' + \
-                f'ame = "{server_name}"\n\t\tEnvironment = "{env}"\n' + \
-                '\t}\n}'
+        tf_resource =f'resource "aws_instance" "{server_name}" ' + '{\n\t' + \
+                f'ami = {ami}\n\tinstance_type = "{instance_type}"\n\tsub' + \
+                f'net_id = {subnet_id}\n\tkey_name = {key}\n\troot_block_' + \
+                f'device '+ '{\n\t\tdelete_on_termination = true\n\t\tencry' + \
+                f'pted = true\n\t\tvolume_size = {root}\n\n\t\t' + 'tags = ' + \
+                '{' + f'\n\t\t\tName = "{server_name}"\n\t\t\tEnvironment =' + \
+                f' "{env}"\n\t\t' + '}\n\t}\n\n\ttags = {\n\t\tName = "' + \
+                f'{server_name}"\n\t\tEnvironment = "{env}"\n' + '\t}\n}'
         create_ec2_tf(tf_resource)
 
 def get_ami(OS):
@@ -102,7 +100,7 @@ def create_ec2_tf(tf_resource):
     tf_isfile = os.path.isfile(file_path)
     if tf_isfile:
         tf = open(file_path, 'a')
-        tf.write("\n\n" + tf_resource)
+        tf.write("\n" + tf_resource)
         tf.close()
     else:
         tf = open(file_path, 'w')

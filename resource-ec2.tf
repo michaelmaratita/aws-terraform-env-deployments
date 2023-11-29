@@ -10,7 +10,7 @@ resource "aws_instance" "dev-app-linux1" {
 
 		tags = {
 			Name = "dev-app-linux1"
-			Environment  = "Development"
+			Environment = "Development"
 		}
 	}
 
@@ -19,7 +19,6 @@ resource "aws_instance" "dev-app-linux1" {
 		Environment = "Development"
 	}
 }
-
 resource "aws_instance" "dev-app-linux2" {
 	ami = var.linux_ami
 	instance_type = "t2.micro"
@@ -32,7 +31,7 @@ resource "aws_instance" "dev-app-linux2" {
 
 		tags = {
 			Name = "dev-app-linux2"
-			Environment  = "Development"
+			Environment = "Development"
 		}
 	}
 
@@ -41,7 +40,6 @@ resource "aws_instance" "dev-app-linux2" {
 		Environment = "Development"
 	}
 }
-
 resource "aws_instance" "test-app-linux1" {
 	ami = var.linux_ami
 	instance_type = "t2.micro"
@@ -54,7 +52,7 @@ resource "aws_instance" "test-app-linux1" {
 
 		tags = {
 			Name = "test-app-linux1"
-			Environment  = "Test"
+			Environment = "Test"
 		}
 	}
 
@@ -63,7 +61,6 @@ resource "aws_instance" "test-app-linux1" {
 		Environment = "Test"
 	}
 }
-
 resource "aws_instance" "test-app-linux2" {
 	ami = var.linux_ami
 	instance_type = "t2.micro"
@@ -76,7 +73,7 @@ resource "aws_instance" "test-app-linux2" {
 
 		tags = {
 			Name = "test-app-linux2"
-			Environment  = "Test"
+			Environment = "Test"
 		}
 	}
 
@@ -85,7 +82,6 @@ resource "aws_instance" "test-app-linux2" {
 		Environment = "Test"
 	}
 }
-
 resource "aws_instance" "pre-prod-app-linux1" {
 	ami = var.linux_ami
 	instance_type = "t2.micro"
@@ -94,11 +90,11 @@ resource "aws_instance" "pre-prod-app-linux1" {
 	root_block_device {
 		delete_on_termination = true
 		encrypted = true
-		volume_size = 10
+		volume_size = 20
 
 		tags = {
 			Name = "pre-prod-app-linux1"
-			Environment  = "PreProd"
+			Environment = "PreProd"
 		}
 	}
 
@@ -107,7 +103,6 @@ resource "aws_instance" "pre-prod-app-linux1" {
 		Environment = "PreProd"
 	}
 }
-
 resource "aws_instance" "pre-prod-app-linux2" {
 	ami = var.linux_ami
 	instance_type = "t2.micro"
@@ -116,11 +111,11 @@ resource "aws_instance" "pre-prod-app-linux2" {
 	root_block_device {
 		delete_on_termination = true
 		encrypted = true
-		volume_size = 10
+		volume_size = 20
 
 		tags = {
 			Name = "pre-prod-app-linux2"
-			Environment  = "PreProd"
+			Environment = "PreProd"
 		}
 	}
 
@@ -129,7 +124,6 @@ resource "aws_instance" "pre-prod-app-linux2" {
 		Environment = "PreProd"
 	}
 }
-
 resource "aws_instance" "dev-db-linux1" {
 	ami = var.linux_ami
 	instance_type = "t2.micro"
@@ -142,7 +136,7 @@ resource "aws_instance" "dev-db-linux1" {
 
 		tags = {
 			Name = "dev-db-linux1"
-			Environment  = "Development"
+			Environment = "Development"
 		}
 	}
 
@@ -151,7 +145,6 @@ resource "aws_instance" "dev-db-linux1" {
 		Environment = "Development"
 	}
 }
-
 resource "aws_instance" "dev-db-linux2" {
 	ami = var.linux_ami
 	instance_type = "t2.micro"
@@ -164,7 +157,7 @@ resource "aws_instance" "dev-db-linux2" {
 
 		tags = {
 			Name = "dev-db-linux2"
-			Environment  = "Development"
+			Environment = "Development"
 		}
 	}
 
@@ -173,7 +166,6 @@ resource "aws_instance" "dev-db-linux2" {
 		Environment = "Development"
 	}
 }
-
 resource "aws_instance" "test-db-linux1" {
 	ami = var.linux_ami
 	instance_type = "t2.micro"
@@ -186,7 +178,7 @@ resource "aws_instance" "test-db-linux1" {
 
 		tags = {
 			Name = "test-db-linux1"
-			Environment  = "Test"
+			Environment = "Test"
 		}
 	}
 
@@ -195,7 +187,6 @@ resource "aws_instance" "test-db-linux1" {
 		Environment = "Test"
 	}
 }
-
 resource "aws_instance" "test-db-linux2" {
 	ami = var.linux_ami
 	instance_type = "t2.micro"
@@ -208,7 +199,7 @@ resource "aws_instance" "test-db-linux2" {
 
 		tags = {
 			Name = "test-db-linux2"
-			Environment  = "Test"
+			Environment = "Test"
 		}
 	}
 
@@ -217,7 +208,6 @@ resource "aws_instance" "test-db-linux2" {
 		Environment = "Test"
 	}
 }
-
 resource "aws_instance" "pre-prod-db-linux1" {
 	ami = var.linux_ami
 	instance_type = "t2.micro"
@@ -226,11 +216,11 @@ resource "aws_instance" "pre-prod-db-linux1" {
 	root_block_device {
 		delete_on_termination = true
 		encrypted = true
-		volume_size = 10
+		volume_size = 20
 
 		tags = {
 			Name = "pre-prod-db-linux1"
-			Environment  = "PreProd"
+			Environment = "PreProd"
 		}
 	}
 
@@ -239,7 +229,6 @@ resource "aws_instance" "pre-prod-db-linux1" {
 		Environment = "PreProd"
 	}
 }
-
 resource "aws_instance" "pre-prod-db-linux2" {
 	ami = var.linux_ami
 	instance_type = "t2.micro"
@@ -248,11 +237,11 @@ resource "aws_instance" "pre-prod-db-linux2" {
 	root_block_device {
 		delete_on_termination = true
 		encrypted = true
-		volume_size = 10
+		volume_size = 20
 
 		tags = {
 			Name = "pre-prod-db-linux2"
-			Environment  = "PreProd"
+			Environment = "PreProd"
 		}
 	}
 

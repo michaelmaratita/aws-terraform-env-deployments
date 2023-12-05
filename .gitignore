@@ -36,3 +36,6 @@ terraform.rc
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+
+# ignore open excel file
+~$vpc_ec2.xlsx

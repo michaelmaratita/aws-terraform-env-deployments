@@ -79,4 +79,4 @@ ec2 = {
 ### **Clean Up**
 
 After completing the testing and validation of the infrastructure, run `terraform destroy`
-to tear down the created resources. 
+to tear down the created resources.

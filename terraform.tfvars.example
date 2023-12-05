@@ -1,21 +1,220 @@
-linux_ami = "ami-06e4ca05d431835e9"
-windows_ami = "ami-00e4817e2aba98c93"
-dev_cidr = "xx.x.x.x//16"
-dev_app_subnet1 = "xx.x.x.x//24"
-dev_app_subnet2 = "xx.x.x.x//24"
-dev_db_subnet1 = "xx.x.x.x//24"
-dev_db_subnet2 = "xx.x.x.x/24"
-test_cidr = "xxx.xx.x.x/16"
-test_app_subnet1 = "xxx.xx.x.x/24"
-test_app_subnet2 = "xxx.xx.x.x/24"
-test_db_subnet1 = "xxx.xx.x.x/24"
-test_db_subnet2 = "xxx.xx.x.x/24"
-preprod_cidr = "xxx.xxx.x.x/16"
-preprod_app_subnet1 = "xxx.xxx.x.x/24"
-preprod_app_subnet2 = "xxx.xxx.x.x/24"
-preprod_db_subnet1 = "xxx.xxx.x.x/24"
-preprod_db_subnet2 = "xxx.xxx.x.x/24"
-az1 = "us-west-1a"
-az2 = "us-west-1b"
-linux_key = "test_linux"
-windows_key = "test_windows"
+region = "us-west-1"
+availability-zones = ["us-west-1a", "us-west-1b"]
+vpc_name = {
+	Development = {
+	  cidr = "X.X.X.0/16"
+	  private_subnet = ["X.X.X.0/24", "X.X.X.0/24"]
+	  public_subnet = ["X.X.X.0/24", "X.X.X.0/24"]
+	}
+	Test = {
+	  cidr = "X.X.X.0/16"
+	  private_subnet = ["X.X.X.0/24", "X.X.X.0/24"]
+	  public_subnet = ["X.X.X.0/24", "X.X.X.0/24"]
+	}
+	PreProd = {
+	  cidr = "X.X.X.0/16"
+	  private_subnet = ["X.X.X.0/24", "X.X.X.0/24"]
+	  public_subnet = ["X.X.X.0/24", "X.X.X.0/24"]
+	}
+}
+public_ec2_name = {
+	dev-app-linux1 = {
+		ami = "ami-06e4ca05d431835e9"
+		public_ip = true
+		availability_zone = "us-west-1a"
+		environment = "Development"
+		instance_type = "t2.micro"
+		key_name = "test_linux"
+		monitoring = true
+		root_volume = {
+			delete_on_termination = true
+			encrypted = true
+			volume_size = 10
+		}
+		subnet_location = "public_subnets"
+		subnet_id = 0
+	}
+	dev-app-linux2 = {
+		ami = "ami-06e4ca05d431835e9"
+		public_ip = true
+		availability_zone = "us-west-1b"
+		environment = "Development"
+		instance_type = "t2.micro"
+		key_name = "test_linux"
+		monitoring = true
+		root_volume = {
+			delete_on_termination = true
+			encrypted = true
+			volume_size = 10
+		}
+		subnet_location = "public_subnets"
+		subnet_id = 1
+	}
+	test-app-linux1 = {
+		ami = "ami-06e4ca05d431835e9"
+		public_ip = true
+		availability_zone = "us-west-1a"
+		environment = "Test"
+		instance_type = "t2.micro"
+		key_name = "test_linux"
+		monitoring = true
+		root_volume = {
+			delete_on_termination = true
+			encrypted = true
+			volume_size = 10
+		}
+		subnet_location = "public_subnets"
+		subnet_id = 0
+	}
+	test-app-linux2 = {
+		ami = "ami-06e4ca05d431835e9"
+		public_ip = true
+		availability_zone = "us-west-1b"
+		environment = "Test"
+		instance_type = "t2.micro"
+		key_name = "test_linux"
+		monitoring = true
+		root_volume = {
+			delete_on_termination = true
+			encrypted = true
+			volume_size = 10
+		}
+		subnet_location = "public_subnets"
+		subnet_id = 1
+	}
+	pre-prod-app-linux1 = {
+		ami = "ami-06e4ca05d431835e9"
+		public_ip = true
+		availability_zone = "us-west-1a"
+		environment = "PreProd"
+		instance_type = "t2.micro"
+		key_name = "test_linux"
+		monitoring = true
+		root_volume = {
+			delete_on_termination = true
+			encrypted = true
+			volume_size = 20
+		}
+		subnet_location = "public_subnets"
+		subnet_id = 0
+	}
+	pre-prod-app-linux2 = {
+		ami = "ami-06e4ca05d431835e9"
+		public_ip = true
+		availability_zone = "us-west-1b"
+		environment = "PreProd"
+		instance_type = "t2.micro"
+		key_name = "test_linux"
+		monitoring = true
+		root_volume = {
+			delete_on_termination = true
+			encrypted = true
+			volume_size = 20
+		}
+		subnet_location = "public_subnets"
+		subnet_id = 1
+	}
+}
+private_ec2_name = {
+	dev-db-linux1 = {
+		ami = "ami-06e4ca05d431835e9"
+		public_ip = false
+		availability_zone = "us-west-1a"
+		environment = "Development"
+		instance_type = "t2.micro"
+		key_name = "test_linux"
+		monitoring = true
+		root_volume = {
+			delete_on_termination = true
+			encrypted = true
+			volume_size = 10
+		}
+		subnet_location = "private_subnets"
+		subnet_id = 0
+	}
+	dev-db-linux2 = {
+		ami = "ami-06e4ca05d431835e9"
+		public_ip = false
+		availability_zone = "us-west-1b"
+		environment = "Development"
+		instance_type = "t2.micro"
+		key_name = "test_linux"
+		monitoring = true
+		root_volume = {
+			delete_on_termination = true
+			encrypted = true
+			volume_size = 10
+		}
+		subnet_location = "private_subnets"
+		subnet_id = 1
+	}
+	test-db-linux1 = {
+		ami = "ami-06e4ca05d431835e9"
+		public_ip = false
+		availability_zone = "us-west-1a"
+		environment = "Test"
+		instance_type = "t2.micro"
+		key_name = "test_linux"
+		monitoring = true
+		root_volume = {
+			delete_on_termination = true
+			encrypted = true
+			volume_size = 10
+		}
+		subnet_location = "private_subnets"
+		subnet_id = 0
+	}
+	test-db-linux2 = {
+		ami = "ami-06e4ca05d431835e9"
+		public_ip = false
+		availability_zone = "us-west-1b"
+		environment = "Test"
+		instance_type = "t2.micro"
+		key_name = "test_linux"
+		monitoring = true
+		root_volume = {
+			delete_on_termination = true
+			encrypted = true
+			volume_size = 10
+		}
+		subnet_location = "private_subnets"
+		subnet_id = 1
+	}
+	pre-prod-db-linux1 = {
+		ami = "ami-06e4ca05d431835e9"
+		public_ip = false
+		availability_zone = "us-west-1a"
+		environment = "PreProd"
+		instance_type = "t2.micro"
+		key_name = "test_linux"
+		monitoring = true
+		root_volume = {
+			delete_on_termination = true
+			encrypted = true
+			volume_size = 20
+		}
+		subnet_location = "private_subnets"
+		subnet_id = 0
+	}
+	pre-prod-db-linux2 = {
+		ami = "ami-06e4ca05d431835e9"
+		public_ip = false
+		availability_zone = "us-west-1b"
+		environment = "PreProd"
+		instance_type = "t2.micro"
+		key_name = "test_linux"
+		monitoring = true
+		root_volume = {
+			delete_on_termination = true
+			encrypted = true
+			volume_size = 20
+		}
+		subnet_location = "private_subnets"
+		subnet_id = 1
+	}
+}
+instance_metadata_option = {
+	"http_endpoint": "enabled",
+	"http_put_response_hop_limit": 1,
+	"http_tokens": "required"
+}

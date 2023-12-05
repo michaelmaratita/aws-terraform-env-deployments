@@ -1,4 +1,3 @@
-from functions import *
+from functions import main
 
-ec2_vals = (read_csv('.\\test_py.csv'))
-tf_resource(ec2_vals)
+main()

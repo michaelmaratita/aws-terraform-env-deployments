@@ -1,7 +1,7 @@
 # Terraform Automated EC2 Deployments
 
 ## **Overview**
-In this scenario, the objective is to leverage Terraform and Python to create multiple Virtual Private Clouds (VPCs) along with associated EC2 instances based on specifications provided in a CSV (Comma-Separated Values) file. Terraform will automate the provisioning of infrastructure, ensuring consistency and ease of management.
+In this scenario, the objective is to leverage Terraform and Python to create multiple Virtual Private Clouds (VPCs) along with associated EC2 instances based on specifications provided in a Excel (XLSX) file. Terraform will automate the provisioning of infrastructure, ensuring consistency and ease of management.
 
 ## **Scenario**
 
@@ -9,28 +9,76 @@ In this scenario, the objective is to leverage Terraform and Python to create mu
 
 The goal is to deploy three distinct VPCs, each containing a specified number of EC2 instances, as outlined in the CSV file. The CSV file serves as a configuration document, detailing the specifications of EC2 instances for each VPC.
 
-### **CSV Format**
+### **XLSX Format**
 
-The CSV file should have the following structure:
+**VPC Tab**
 
-```csv
-Name,Instance_Type,Root_Volume,Data_Volume,Environment_Tag,Server_Type_Tag,OS_Type_Tag,Availability-Zone
-```
-1. Name
-2. Instance Type
-3. Root Volume Size (int)
-4. Data Volume Size (int)
-5. Environment Tag, e.g. Development, Test, PreProduction, Production
-5. Server Type Tag, e.g. Application, Database
-6. OS Tag, e.g. Linux, Windows
-7. Availability-Zone, e.g. us-west-1a, us-west-1b
+The current configuration utilizes these columns to define the infrastructure for the VPC
+
+- Name
+- CIDR
+- Private Subnet (x2)
+- Public Subnet (x2)
+
+**EC2 Tab**
+
+The current configuration utilizes these columns to define the infrastructure for each EC2 instance.
+
+- Name
+- Instance Type
+- Root Volume Size
+- Data Volume Size
+- Environment
+- Server Type
+- Operating System
+- Availability Zone
 
 ### **Python Execution**
 
-1. **EC2 Resource TF File Creation**
-    - Parse the CSV file to extract EC2 details.
-    - Implement Terraform code to create VPCs based on the provided specifications.
-    - Create [resource-ec2.tf](resource-ec2.tf) with each EC2 instance resource
+Parses the XLSX and define python dictionaries for VPC and EC2 using Pandas module
+
+1. **Variables File Creation**
+    - From the dicitonaries defined, those values are passed to custom functions that
+    create formatted strings that the `variables.tf` expects:
+    - The `variables.tf` is created if none exist, or appends an existing file.
+
+```tf
+variable "instance_metadata_option" {
+  type = map(string)
+}
+variable "vpc_name" {
+  type = object({
+    Development = object({
+      cidr = string
+      private_subnet = list(string)
+      public_subnet = list(string)
+    })
+  })
+}
+variable "public_ec2_name" {
+  type = object({
+    dev-app-linux1 = object({
+      ami = string
+      public_ip = bool
+      availability_zone = string
+      environment = string
+      instance_type = string
+      key_name = string
+      monitoring = bool
+      root_volume = object({
+        delete_on_termination = bool
+        encrypted = bool
+        volume_size = number
+      })
+      subnet_id = number
+    })
+  })
+}
+```
+
+**TFVARS File Creation**
+    - much like the `variables.tf`, the `terraform.tfvars` is created using custom
+    formatting functions to format string values the `tfvars` file expects.
 
 ### **Terraform Execution**
 
@@ -47,34 +95,11 @@ Name,Instance_Type,Root_Volume,Data_Volume,Environment_Tag,Server_Type_Tag,OS_Ty
 2. **Configure Terraform**
     - Ensure Terraform is installed on the machine that will perform the Terraform creations. 
 3. **CSV File Input:**
-    - Replace the example CSV file with your own, ensuring it follows the provided format.
+    - Replace the example XLSX file with your own, ensuring it follows the provided format.
 4. **Terraform Initialization:**
     - Run `terraform init` to initialize the Terraform project.
 5. **Terraform Execution:**
-    - Execute `terraform apply` to create the VPCs and EC2 instances based on the CSV file.
-
-### **CSV File Cusomization**
-
-Modify the CSV file according to your specific requirements, and if additional parameters
-need to be met, ensure to modify the `read_csv` function in [functions.py](functions.py).
-
-Additional parameters can be annotated by "**...**" within the code block below:
-
-```python
-ec2 = {
-    value[0] : {
-        "Instance Type" : value[1],
-        "Root Volume" : value[2],
-        "Data Volume" : value[3],
-        "Environment" : value[4],
-        "Server Type" : value[5],
-        "OS" : value[6],
-        "Availability-Zone" : value[7]
-        ...
-        ...
-    }
-}
-```
+    - Execute `terraform apply` to create the VPCs and EC2 instances based on the XLSX file.
 
 ### **Clean Up**
 
